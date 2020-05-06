@@ -1,5 +1,14 @@
 module.exports = ({
     graphqlUrl: 'http://localhost:3004/',
+    Cassandra: {
+        user: 'cassandra',
+        pass: 'test123',
+        config: {
+            contactPoints: ['127.0.0.1:9042'],
+            keyspace: 'foodie',
+            localDataCenter: 'datacenter1'
+        }
+    },
     Queue: {
         url: 'localhost',
         user: 'admin',

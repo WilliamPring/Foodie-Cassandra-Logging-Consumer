@@ -7,3 +7,5 @@ const cassandraInstance = new ConfigureCassandra();
 
 
 export const logger = loggerInstance.logger;
+export const cassandra = cassandraInstance.getClinet()
+

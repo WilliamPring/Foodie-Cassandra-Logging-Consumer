@@ -1,4 +1,4 @@
-version: '2'
+version: '3.5'
 
 networks:
     foodie-cassandra-network:
@@ -27,5 +27,3 @@ services:
       - CASSANDRA_SEEDS=cassandra-node1,cassandra-node2
       - CASSANDRA_PASSWORD=password123
       - CASSANDRA_HOST=127.0.0.1
-    ports:
-       - "9042:9042"

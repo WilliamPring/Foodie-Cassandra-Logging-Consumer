@@ -1,22 +1,32 @@
-import {auth, Client} from 'cassandra-driver';
+import {auth, Client, types} from 'cassandra-driver';
+import config from 'config'
 export default class ConfigureCassandra {
 
     constructor() {
+        let cassandraConfig = config.get('Cassandra').config;
+        console.log(cassandraConfig)
         let authProvider = new auth.PlainTextAuthProvider('cassandra', 'password123');
-        let client = new Client({
-            contactPoints: ['127.0.0.1:9042'],
-            keyspace: 'foodie',
-            localDataCenter: 'datacenter1',
-            authProvider: authProvider
+        this._client = new Client({
+            ...cassandraConfig,
+            authProvider
         });
-        const query = 'SELECT name, email FROM users WHERE key = ?';
-        try {
-            client.execute(query, [ 'someone' ])
-            .then(result => console.log('User with email %s', result.rows[0].email));
-        } catch(e) {
-            console.log(e)
-        }
+    }
+
+    async getClinet() {
+        const queries = [{
+              query: 'INSERT INTO foodie.logs (log_application, log_type, log_message, log_datetime, log_id) VALUES (?, ?, ?, ?, ?)',
+              params: [ 'hendrix', 'Changed email', 'asdf', 'asdf', types.TimeUuid.now() ]
+            }
+          ];
+
+            try {
+                //await this._client.batch(queries, { prepare: true });
+
+            } catch(e) {
+                console.log(e)
+            }
 
     }
+
 }
 
