@@ -14,13 +14,13 @@ export default class ConfigureCassandra {
 
     async getClinet() {
         const queries = [{
-              query: 'INSERT INTO foodie.logs (log_application, log_type, log_message, log_datetime, log_id) VALUES (?, ?, ?, ?, ?)',
-              params: [ 'hendrix', 'Changed email', 'asdf', 'asdf', types.TimeUuid.now() ]
+              query: 'INSERT INTO foodie.logs (log_application, log_type, log_message, log_timestamp, log_id) VALUES (?, ?, ?, ?, ?)',
+              params: [ 'hendrixsdfsdfsdfsdf', 'Changed email', 'asdf',new Date(), types.TimeUuid.now() ]
             }
           ];
 
             try {
-                //await this._client.batch(queries, { prepare: true });
+                await this._client.batch(queries, { prepare: true });
 
             } catch(e) {
                 console.log(e)
