@@ -1,6 +1,6 @@
 import { connect } from 'amqplib/callback_api'
 import config  from 'config'
-import {logger} from '.'
+import {logger, cassandra} from '.'
 class ConfigureConsumer {
     constructor() {
         this._config = config.get('Queue')
@@ -26,8 +26,8 @@ class ConfigureConsumer {
                     channel.bindQueue(q.queue, exchange, key );
                     channel.consume(q.queue, (msg) => {
                         //buffer: have to convert to json
-                        logger.info('@Consumer Request with topic: %s', msg.content)
-
+                        logger.info('@Consumer Request with topic: %s', JSON.parse(msg.content))
+                        cassandra.logMessage(JSON.parse(msg.content))
                     }, { noAck: true  });
                 });
             })

@@ -16,7 +16,18 @@ amqp.connect('amqp://admin:pass@localhost', function(error0, connection) {
     channel.assertExchange(exchange, 'topic', {
       durable: false
     });
-    channel.publish(exchange, key, Buffer.from(msg));
+
+     //       query:
+        //       params: [ 'hendrixsdfsdfsdfsdf', 'Changed email', 'asdf',new Date(), types.TimeUuid.now() ]
+
+    var data = {
+        log_application: 'Review',
+        log_type: 'Exception',
+        log_application_action: 'function',
+        log_message: 'Error in graph layer',
+        log_timestamp: new Date()
+    }
+    channel.publish(exchange, key, Buffer.from(JSON.stringify(data)));
     console.log(" [x] Sent %s:'%s'", key, msg);
   });
 

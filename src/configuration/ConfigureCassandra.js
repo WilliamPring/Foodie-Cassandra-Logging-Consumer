@@ -1,5 +1,6 @@
 import {auth, Client, types} from 'cassandra-driver';
 import config from 'config'
+import {values} from 'lodash'
 export default class ConfigureCassandra {
 
     constructor() {
@@ -12,21 +13,18 @@ export default class ConfigureCassandra {
         });
     }
 
+    async logMessage(message) {
+        const log_id = types.TimeUuid.now();
+        message[log_id] = log_id;
+        console.log(message)
+        const data = values(message)
+        await this._client.execute( 'INSERT INTO foodie.logs (log_application, log_type, log_message, log_timestamp, log_id) VALUES (?, ?, ?, ?, ?)', data, { prepare: true });
+        console.log('Row updated on the cluster');
+
+    }
+
     async getClinet() {
         return this._client;
     }
 
 }
-
-        // const queries = [{
-        //       query: 'INSERT INTO foodie.logs (log_application, log_type, log_message, log_timestamp, log_id) VALUES (?, ?, ?, ?, ?)',
-        //       params: [ 'hendrixsdfsdfsdfsdf', 'Changed email', 'asdf',new Date(), types.TimeUuid.now() ]
-        //     }
-        //   ];
-
-        //     try {
-        //         await this._client.batch(queries, { prepare: true });
-
-        //     } catch(e) {
-        //         console.log(e)
-        //     }
