@@ -18,7 +18,9 @@ export default class ConfigureCassandra {
         message[log_id] = log_id;
         console.log(message)
         const data = values(message)
-        await this._client.execute( 'INSERT INTO foodie.logs (log_application, log_type, log_message, log_timestamp, log_id) VALUES (?, ?, ?, ?, ?)', data, { prepare: true });
+        console.log(data)
+        await this._client.execute('INSERT INTO foodie.logs (log_application, log_type, log_application_action, log_message, log_timestamp, log_id) VALUES (?, ?, ?, ?, ?, ?)',
+                                    data, { prepare: true });
         console.log('Row updated on the cluster');
 
     }
