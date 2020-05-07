@@ -15,14 +15,14 @@ module.exports = ({
         secret: 'pass',
         cachePrefix: '',
         name: 'logging',
+        exchange: 'logging',
+        key: '*.logging.*',
         cacheOption: {
             cache: false,
             expire: 30000
         },
         topic: {
-            image: 'user.review.image',
-            error: 'app.alert.error',
-            warning: 'app.alert.warning'
+            logging: '*.logging.*'
         }
     }
 })
